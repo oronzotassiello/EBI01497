@@ -1,4 +1,5 @@
 HOW TO RUN TEST
+
 after running the code using command "docker-compose up" inside the project dir ebi-test/
 
 Automate testing:
