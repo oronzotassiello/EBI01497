@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: Simple gene search API
+  description: Simple API to search genes in Ensembl database
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/oronzotassiello/embl-ebi-API/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://localhost:5000/
+  description: Ensembl RESTful API test
+paths:
+  /genes:
+    get:
+      summary: searches genes
+      description: |
+        By passing in the appropriate the gene name with minimum 3 character and an optional full name species, you can search for a gene in the Ensembl public database
+      parameters:
+      - name: name
+        in: path
+        description: mandatory search string of minimum 3 characters
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: species
+        in: path
+        description: full name of a species
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Gene'
+        400:
+          description: bad input parameter minimum 3 character gene name
+    put:
+      responses:
+        405:
+          description: request not permitted
+    post:
+      responses:
+        405:
+          description: request not permitted
+    patch:
+      responses:
+        405:
+          description: request not permitted
+components:
+  schemas:
+    Gene:
+      required:
+      - display_label
+      - species
+      - stable_id
+      type: object
+      properties:
+        stable_id:
+          type: string
+          example: ENSAPLG00000007774
+        display_label:
+          type: string
+          example: brca2
+        species:
+          type: string
+          example: bos_taurus
